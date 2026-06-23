@@ -45,9 +45,9 @@ class Think2SegInference:
                 "trust_remote_code": True,
                 "cache_dir": settings.cache_dir,
             }
-            if settings.huggingface_token:
-                tokenizer_kwargs["use_auth_token"] = settings.huggingface_token
-                model_kwargs["use_auth_token"] = settings.huggingface_token
+            if getattr(settings, 'HF_TOKEN', None):
+                tokenizer_kwargs["use_auth_token"] = settings.HF_TOKEN
+                model_kwargs["use_auth_token"] = settings.HF_TOKEN
 
             # Load tokenizer
             self.tokenizer = AutoTokenizer.from_pretrained(

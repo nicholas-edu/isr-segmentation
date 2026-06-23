@@ -1,10 +1,17 @@
-import os
+from pydantic import ConfigDict, Field
 from pydantic_settings import BaseSettings
 from typing import Optional
 
 
 class Settings(BaseSettings):
     """Application settings with environment variable support."""
+
+    model_config: ConfigDict = ConfigDict(
+        protected_namespaces=("settings_",),
+        env_file=".env",
+        case_sensitive=False,
+        extra="allow",
+    )
 
     # API Configuration
     api_host: str = "0.0.0.0"
@@ -15,7 +22,11 @@ class Settings(BaseSettings):
     # Model Configuration
     model_name: str = "Think2Seg-RS-7B"  # or "Think2Seg-RS-3B"
     model_path: Optional[str] = None  # HuggingFace model ID or local path
-    huggingface_token: Optional[str] = None  # Optional Hugging Face access token for gated repos
+    hf_token: Optional[str] = Field(
+        default=None,
+        env="HF_TOKEN",
+        description="Optional Hugging Face access token for gated repos",
+    )
     device: str = "cuda"  # or "cpu"
     dtype: str = "bfloat16"  # or "float32"
 
@@ -35,10 +46,6 @@ class Settings(BaseSettings):
     # VLLM Configuration (for faster inference)
     use_vllm: bool = False
     vllm_tensor_parallel_size: int = 1
-
-    class Config:
-        env_file = ".env"
-        case_sensitive = False
 
     def model_post_init(self, __context):
         """Post-initialization validation."""
