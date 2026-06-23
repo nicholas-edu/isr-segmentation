@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: think2seg-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - DEVICE=cuda
+      - MODEL_NAME=Think2Seg-RS-7B
+      - API_HOST=0.0.0.0
+      - API_PORT=8000
+      - DEBUG=false
+    volumes:
+      - ./backend:/app
+      - model_cache:/app/.model_cache
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    networks:
+      - think2seg-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: think2seg-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - think2seg-network
+    environment:
+      - VITE_API_URL=http://localhost:8000
+
+volumes:
+  model_cache:
+    driver: local
+
+networks:
+  think2seg-network:
+    driver: bridge

@@ -1,0 +1,53 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Node
+node_modules
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm
+dist
+
+# Python
+__pycache__
+*.py[cod]
+*.egg-info
+.Python
+venv
+env
+.venv
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+*~
+.DS_Store
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Misc
+.env
+.env.local
+*.log
+.cache
+.coverage
+htmlcov
+build
+dist
+
+# Model cache (will be mounted as volume)
+.model_cache
+models
+
+# Documentation
+docs
+*.md
+CHANGELOG.md
+LICENSE

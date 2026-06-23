@@ -1,0 +1,38 @@
+# Backend Dockerfile
+FROM nvidia/cuda:12.2.2-runtime-ubuntu22.04
+
+WORKDIR /app
+
+# Install Python and dependencies non-interactively
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    tzdata \
+    python3.10 \
+    python3-pip \
+    git \
+    libopencv-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Reset frontend to avoid affecting later commands
+ENV DEBIAN_FRONTEND=dialog
+
+# Set Python alias
+RUN ln -s /usr/bin/python3.10 /usr/bin/python
+
+# Install Python dependency tooling before requirements
+COPY backend/requirements.txt .
+RUN pip install --no-cache-dir --upgrade pip setuptools wheel packaging
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy backend code
+COPY backend/ .
+
+# Expose port
+EXPOSE 8000
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
+    CMD python -c "import requests; requests.get('http://localhost:8000/health')" || exit 1
+
+# Run server
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]

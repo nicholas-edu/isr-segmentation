@@ -1,0 +1,83 @@
+# Think2Seg Demo - .gitignore
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Backend specific
+.model_cache/
+*.pth
+*.safetensors
+.env
+!.env.example
+
+# Frontend
+node_modules/
+dist/
+.dist
+.cache
+.vite
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Docker
+.docker
+docker-compose.override.yml
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Models (large files)
+*.pt
+*.ckpt
+*.pth
+*.bin
+*.safetensors
+models/
+
+# Temporary
+*.tmp
+*.temp
+tmp/
+temp/
