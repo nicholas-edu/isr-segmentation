@@ -25,6 +25,11 @@ RUN ln -s /usr/bin/python3.10 /usr/bin/python
 # Install Python build tooling before dependencies
 COPY backend/requirements.txt .
 RUN pip install --no-cache-dir --upgrade pip setuptools wheel packaging
+
+# Install torch first (required for flash-attn build)
+RUN pip install --no-cache-dir torch==2.6.0 torchvision==0.17.0
+
+# Install remaining dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy backend code
