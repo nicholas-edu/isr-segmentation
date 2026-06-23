@@ -5,7 +5,7 @@
       <div class="max-w-7xl mx-auto px-4">
         <div class="flex items-center justify-between">
           <div>
-            <h1 class="text-3xl font-bold">🛰️ Think2Seg</h1>
+            <h1 class="text-3xl font-bold">ISR</h1>
             <p class="text-sm text-gray-200 mt-1">Natural Language Satellite Image Segmentation</p>
           </div>
           <div v-if="modelStatus.loaded" class="text-right">
@@ -146,7 +146,7 @@
               </div>
               <div class="bg-green-50 p-3 rounded-lg">
                 <p class="text-xs text-gray-600">Model</p>
-                <p class="text-xs font-bold text-green-600 truncate">Think2Seg-RS</p>
+                <p class="text-xs font-bold text-green-600 truncate">ISR</p>
               </div>
             </div>
           </div>
@@ -165,7 +165,7 @@
 
     <!-- Footer -->
     <footer class="bg-black bg-opacity-40 text-white text-center py-6 mt-12">
-      <p class="text-sm">Think2Seg Demo v1.0 | Powered by Qwen-2.5-VL + SAM2</p>
+      <p class="text-sm">ISR Demo v1.0 | Powered by Qwen-2.5-VL + SAM2</p>
     </footer>
   </div>
 </template>
@@ -277,7 +277,7 @@ export default {
 
       const link = document.createElement('a')
       link.href = `data:image/png;base64,${segmentationResult.value.visualization_base64}`
-      link.download = `think2seg-result-${Date.now()}.png`
+      link.download = `isr-result-${Date.now()}.png`
       link.click()
     }
 

@@ -25,7 +25,7 @@ services:
               count: 1
               capabilities: [gpu]
     networks:
-      - think2seg-network
+      - isr-network
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
       interval: 30s
@@ -37,13 +37,13 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.frontend
-    container_name: think2seg-frontend
+    container_name: isr-frontend
     ports:
       - "3000:80"
     depends_on:
       - backend
     networks:
-      - think2seg-network
+      - isr-network
     environment:
       - VITE_API_URL=http://localhost:8000
 
@@ -52,5 +52,5 @@ volumes:
     driver: local
 
 networks:
-  think2seg-network:
+  isr-network:
     driver: bridge
